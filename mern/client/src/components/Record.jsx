@@ -5,6 +5,7 @@ export default function Record() {
   const [form, setForm] = useState({
     name: "",
     rating: "",
+    fee: "",
     region: "",
   });
   const [isNew, setIsNew] = useState(true);
@@ -75,7 +76,7 @@ export default function Record() {
     } catch (error) {
       console.error("A problem occurred adding or updating a record: ", error);
     } finally {
-      setForm({ name: "", rating: "", region: "" });
+      setForm({ name: "", rating: "", fee: "", region: "" });
       navigate("/");
     }
   }
@@ -140,6 +141,27 @@ export default function Record() {
                     placeholder="Developer Advocate"
                     value={form.rating}
                     onChange={(e) => updateForm({ rating: e.target.value })}
+                  />
+                </div>
+              </div>
+            </div>
+            <div className="sm:col-span-4">
+              <label
+                htmlFor="fee"
+                className="block text-sm font-medium leading-6 text-slate-900"
+              >
+                Fee
+              </label>
+              <div className="mt-2">
+                <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-slate-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
+                  <input
+                    type="text"
+                    name="fee"
+                    id="fee"
+                    className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-slate-900 placeholder:text-slate-400 focus:ring-0 sm:text-sm sm:leading-6"
+                    placeholder="Developer Advocate"
+                    value={form.fee}
+                    onChange={(e) => updateForm({ fee: e.target.value })}
                   />
                 </div>
               </div>

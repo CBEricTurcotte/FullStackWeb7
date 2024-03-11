@@ -10,6 +10,9 @@ const Record = (props) => (
       {props.record.rating}
     </td>
     <td className="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">
+      {props.record.fee}
+    </td>
+    <td className="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">
       {props.record.region}
     </td>
     <td className="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">
@@ -90,6 +93,9 @@ export default function AgentList() {
                 </th>
                 <th className="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0">
                   Rating
+                </th>
+                <th className="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0">
+                  Fee
                 </th>
                 <th className="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0">
                   Region
