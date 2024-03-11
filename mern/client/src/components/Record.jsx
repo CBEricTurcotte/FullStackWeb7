@@ -4,7 +4,7 @@ import { useParams, useNavigate } from "react-router-dom";
 export default function Record() {
   const [form, setForm] = useState({
     name: "",
-    position: "",
+    region: "",
     level: "",
   });
   const [isNew, setIsNew] = useState(true);
@@ -14,7 +14,7 @@ export default function Record() {
   useEffect(() => {
     async function fetchData() {
       const id = params.id?.toString() || undefined;
-      if(!id) return;
+      if (!id) return;
       setIsNew(false);
       const response = await fetch(
         `http://localhost:5050/record/${params.id.toString()}`
@@ -73,9 +73,9 @@ export default function Record() {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
     } catch (error) {
-      console.error('A problem occurred adding or updating a record: ', error);
+      console.error("A problem occurred adding or updating a record: ", error);
     } finally {
-      setForm({ name: "", position: "", level: "" });
+      setForm({ name: "", region: "", level: "" });
       navigate("/");
     }
   }
@@ -83,7 +83,9 @@ export default function Record() {
   // This following section will display the form that takes the input from the user.
   return (
     <>
-      <h3 className="text-lg font-semibold p-4">Create/Update Employee Record</h3>
+      <h3 className="text-lg font-semibold p-4">
+        Create/Update Employee Record
+      </h3>
       <form
         onSubmit={onSubmit}
         className="border rounded-lg overflow-hidden p-4"
@@ -123,33 +125,33 @@ export default function Record() {
             </div>
             <div className="sm:col-span-4">
               <label
-                htmlFor="position"
+                htmlFor="region"
                 className="block text-sm font-medium leading-6 text-slate-900"
               >
-                Position
+                Region
               </label>
               <div className="mt-2">
                 <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-slate-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
                   <input
                     type="text"
-                    name="position"
-                    id="position"
+                    name="region"
+                    id="region"
                     className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-slate-900 placeholder:text-slate-400 focus:ring-0 sm:text-sm sm:leading-6"
                     placeholder="Developer Advocate"
-                    value={form.position}
-                    onChange={(e) => updateForm({ position: e.target.value })}
+                    value={form.region}
+                    onChange={(e) => updateForm({ region: e.target.value })}
                   />
                 </div>
               </div>
             </div>
             <div>
               <fieldset className="mt-4">
-                <legend className="sr-only">Position Options</legend>
+                <legend className="sr-only">Region Options</legend>
                 <div className="space-y-4 sm:flex sm:items-center sm:space-x-10 sm:space-y-0">
                   <div className="flex items-center">
                     <input
-                      id="positionIntern"
-                      name="positionOptions"
+                      id="regionIntern"
+                      name="regionOptions"
                       type="radio"
                       value="Intern"
                       className="h-4 w-4 border-slate-300 text-slate-600 focus:ring-slate-600 cursor-pointer"
@@ -157,14 +159,14 @@ export default function Record() {
                       onChange={(e) => updateForm({ level: e.target.value })}
                     />
                     <label
-                      htmlFor="positionIntern"
+                      htmlFor="regionIntern"
                       className="ml-3 block text-sm font-medium leading-6 text-slate-900 mr-4"
                     >
                       Intern
                     </label>
                     <input
-                      id="positionJunior"
-                      name="positionOptions"
+                      id="regionJunior"
+                      name="regionOptions"
                       type="radio"
                       value="Junior"
                       className="h-4 w-4 border-slate-300 text-slate-600 focus:ring-slate-600 cursor-pointer"
@@ -172,14 +174,14 @@ export default function Record() {
                       onChange={(e) => updateForm({ level: e.target.value })}
                     />
                     <label
-                      htmlFor="positionJunior"
+                      htmlFor="regionJunior"
                       className="ml-3 block text-sm font-medium leading-6 text-slate-900 mr-4"
                     >
                       Junior
                     </label>
                     <input
-                      id="positionSenior"
-                      name="positionOptions"
+                      id="regionSenior"
+                      name="regionOptions"
                       type="radio"
                       value="Senior"
                       className="h-4 w-4 border-slate-300 text-slate-600 focus:ring-slate-600 cursor-pointer"
@@ -187,7 +189,7 @@ export default function Record() {
                       onChange={(e) => updateForm({ level: e.target.value })}
                     />
                     <label
-                      htmlFor="positionSenior"
+                      htmlFor="regionSenior"
                       className="ml-3 block text-sm font-medium leading-6 text-slate-900 mr-4"
                     >
                       Senior
