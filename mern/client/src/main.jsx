@@ -2,7 +2,7 @@ import * as React from "react";
 import * as ReactDOM from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import App from "./App";
-import Record from "./components/Record";
+import Agent from "./components/Agent";
 import AgentList from "./components/AgentList";
 import "./index.css";
 
@@ -23,7 +23,7 @@ const router = createBrowserRouter([
     children: [
       {
         path: "/create",
-        element: <Record />,
+        element: <Agent />,
       },
     ],
   },
@@ -33,7 +33,7 @@ const router = createBrowserRouter([
     children: [
       {
         path: "/edit/:id",
-        element: <Record />,
+        element: <Agent />,
       },
     ],
   },

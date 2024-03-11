@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 
-export default function Record() {
+export default function Agent() {
   const [form, setForm] = useState({
     name: "",
     rating: "",
@@ -18,20 +18,20 @@ export default function Record() {
       if (!id) return;
       setIsNew(false);
       const response = await fetch(
-        `http://localhost:5050/record/${params.id.toString()}`
+        `http://localhost:5050/agent/${params.id.toString()}`
       );
       if (!response.ok) {
         const message = `An error has occurred: ${response.statusText}`;
         console.error(message);
         return;
       }
-      const record = await response.json();
-      if (!record) {
-        console.warn(`Record with id ${id} not found`);
+      const agent = await response.json();
+      if (!agent) {
+        console.warn(`Agent with id ${id} not found`);
         navigate("/");
         return;
       }
-      setForm(record);
+      setForm(agent);
     }
     fetchData();
     return;
@@ -51,8 +51,8 @@ export default function Record() {
     try {
       let response;
       if (isNew) {
-        // if we are adding a new record we will POST to /record.
-        response = await fetch("http://localhost:5050/record", {
+        // if we are adding a new agent we will POST to /agent.
+        response = await fetch("http://localhost:5050/agent", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -60,8 +60,8 @@ export default function Record() {
           body: JSON.stringify(person),
         });
       } else {
-        // if we are updating a record we will PATCH to /record/:id.
-        response = await fetch(`http://localhost:5050/record/${params.id}`, {
+        // if we are updating a agent we will PATCH to /agent/:id.
+        response = await fetch(`http://localhost:5050/agent/${params.id}`, {
           method: "PATCH",
           headers: {
             "Content-Type": "application/json",
@@ -74,7 +74,7 @@ export default function Record() {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
     } catch (error) {
-      console.error("A problem occurred adding or updating a record: ", error);
+      console.error("A problem occurred adding or updating a agent: ", error);
     } finally {
       setForm({ name: "", rating: "", fee: "", region: "" });
       navigate("/");
@@ -85,7 +85,7 @@ export default function Record() {
   return (
     <>
       <h3 className="text-lg font-semibold p-4">
-        Create/Update Employee Record
+        Create/Update Employee Agent
       </h3>
       <form
         onSubmit={onSubmit}
@@ -239,7 +239,7 @@ export default function Record() {
         </div>
         <input
           type="submit"
-          value="Save Employee Record"
+          value="Save Employee Agent"
           className="inline-flex items-center justify-center whitespace-nowrap text-md font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-slate-100 hover:text-accent-foreground h-9 rounded-md px-3 cursor-pointer mt-4"
         />
       </form>
