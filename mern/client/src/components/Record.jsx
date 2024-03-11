@@ -4,8 +4,8 @@ import { useParams, useNavigate } from "react-router-dom";
 export default function Record() {
   const [form, setForm] = useState({
     name: "",
+    rating: "",
     region: "",
-    level: "",
   });
   const [isNew, setIsNew] = useState(true);
   const params = useParams();
@@ -75,7 +75,7 @@ export default function Record() {
     } catch (error) {
       console.error("A problem occurred adding or updating a record: ", error);
     } finally {
-      setForm({ name: "", region: "", level: "" });
+      setForm({ name: "", rating: "", region: "" });
       navigate("/");
     }
   }
@@ -125,21 +125,21 @@ export default function Record() {
             </div>
             <div className="sm:col-span-4">
               <label
-                htmlFor="region"
+                htmlFor="rating"
                 className="block text-sm font-medium leading-6 text-slate-900"
               >
-                Region
+                Rating
               </label>
               <div className="mt-2">
                 <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-slate-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
                   <input
                     type="text"
-                    name="region"
-                    id="region"
+                    name="rating"
+                    id="rating"
                     className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-slate-900 placeholder:text-slate-400 focus:ring-0 sm:text-sm sm:leading-6"
                     placeholder="Developer Advocate"
-                    value={form.region}
-                    onChange={(e) => updateForm({ region: e.target.value })}
+                    value={form.rating}
+                    onChange={(e) => updateForm({ rating: e.target.value })}
                   />
                 </div>
               </div>
@@ -150,49 +150,64 @@ export default function Record() {
                 <div className="space-y-4 sm:flex sm:items-center sm:space-x-10 sm:space-y-0">
                   <div className="flex items-center">
                     <input
-                      id="regionIntern"
+                      id="regionNorth"
                       name="regionOptions"
                       type="radio"
-                      value="Intern"
+                      value="North"
                       className="h-4 w-4 border-slate-300 text-slate-600 focus:ring-slate-600 cursor-pointer"
-                      checked={form.level === "Intern"}
-                      onChange={(e) => updateForm({ level: e.target.value })}
+                      checked={form.region === "North"}
+                      onChange={(e) => updateForm({ region: e.target.value })}
                     />
                     <label
-                      htmlFor="regionIntern"
+                      htmlFor="regionNorth"
                       className="ml-3 block text-sm font-medium leading-6 text-slate-900 mr-4"
                     >
-                      Intern
+                      North
                     </label>
                     <input
-                      id="regionJunior"
+                      id="regionSouth"
                       name="regionOptions"
                       type="radio"
-                      value="Junior"
+                      value="South"
                       className="h-4 w-4 border-slate-300 text-slate-600 focus:ring-slate-600 cursor-pointer"
-                      checked={form.level === "Junior"}
-                      onChange={(e) => updateForm({ level: e.target.value })}
+                      checked={form.region === "South"}
+                      onChange={(e) => updateForm({ region: e.target.value })}
                     />
                     <label
-                      htmlFor="regionJunior"
+                      htmlFor="regionSouth"
                       className="ml-3 block text-sm font-medium leading-6 text-slate-900 mr-4"
                     >
-                      Junior
+                      South
                     </label>
                     <input
-                      id="regionSenior"
+                      id="regionEast"
                       name="regionOptions"
                       type="radio"
-                      value="Senior"
+                      value="East"
                       className="h-4 w-4 border-slate-300 text-slate-600 focus:ring-slate-600 cursor-pointer"
-                      checked={form.level === "Senior"}
-                      onChange={(e) => updateForm({ level: e.target.value })}
+                      checked={form.region === "East"}
+                      onChange={(e) => updateForm({ region: e.target.value })}
                     />
                     <label
-                      htmlFor="regionSenior"
+                      htmlFor="regionEast"
                       className="ml-3 block text-sm font-medium leading-6 text-slate-900 mr-4"
                     >
-                      Senior
+                      East
+                    </label>
+                    <input
+                      id="regionWest"
+                      name="regionOptions"
+                      type="radio"
+                      value="West"
+                      className="h-4 w-4 border-slate-300 text-slate-600 focus:ring-slate-600 cursor-pointer"
+                      checked={form.region === "West"}
+                      onChange={(e) => updateForm({ region: e.target.value })}
+                    />
+                    <label
+                      htmlFor="regionWest"
+                      className="ml-3 block text-sm font-medium leading-6 text-slate-900 mr-4"
+                    >
+                      West
                     </label>
                   </div>
                 </div>
