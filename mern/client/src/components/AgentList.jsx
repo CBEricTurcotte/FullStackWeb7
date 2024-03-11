@@ -35,7 +35,7 @@ const Record = (props) => (
   </tr>
 );
 
-export default function RecordList() {
+export default function AgentList() {
   const [records, setRecords] = useState([]);
 
   // This method fetches the records from the database.
@@ -64,7 +64,7 @@ export default function RecordList() {
   }
 
   // This method will map out the records on the table
-  function recordList() {
+  function agentList() {
     return records.map((record) => {
       return (
         <Record
@@ -100,7 +100,7 @@ export default function RecordList() {
               </tr>
             </thead>
             <tbody className="[&amp;_tr:last-child]:border-0">
-              {recordList()}
+              {agentList()}
             </tbody>
           </table>
         </div>
