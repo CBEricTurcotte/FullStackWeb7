@@ -1,77 +1,122 @@
-import { useState } from "react";
-import { NavLink } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { useParams, useNavigate } from "react-router-dom";
 
-export default function Login() {
-  // State to manage the email and password fields
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+export default function Agent() {
+  const [form, setForm] = useState({
+    email: "",
+    password: "",
+  });
 
-  // Function to handle form submission
-  const handleLogin = (e) => {
+  const navigate = useNavigate();
+
+  // These methods will update the state properties.
+  function updateForm(value) {
+    return setForm((prev) => {
+      return { ...prev, ...value };
+    });
+  }
+
+  // This function will handle the submission.
+  async function onSubmit(e) {
     e.preventDefault();
-    // Here you can implement the logic to handle login
-    console.log("Login clicked");
-    console.log("Email:", email);
-    console.log("Password:", password);
-    // Example: You can send the email and password to an API for authentication
-  };
+    const person = { ...form };
+    try {
+      let response;
 
+      // if we are adding a new agent we will POST to /agent.
+      response = await fetch("http://localhost:5050/agent/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(person),
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      if (response.status === 200) {
+        navigate("/home");
+      } else {
+        window.alert("Login failed");
+      }
+    } catch (error) {
+      console.error("A problem occurred adding or updating a agent: ", error);
+    } finally {
+      setForm({ email: "", password: "" });
+      navigate("/");
+    }
+  }
+
+  // This following section will display the form that takes the input from the user.
   return (
-    <div>
-      <nav className="flex justify-between items-center mb-6">
-        <NavLink to="/">
-          <img
-            alt="Rocket Logo"
-            className="h-20 inline"
-            src="src/images/RocketElevatorsLogo.png"
-          ></img>
-        </NavLink>
-      </nav>
+    <>
+      <h3 className="text-lg font-semibold p-4">Login</h3>
+      <form
+        onSubmit={onSubmit}
+        className="border rounded-lg overflow-hidden p-4"
+      >
+        <div className="grid grid-cols-1 gap-x-8 gap-y-10 border-b border-slate-900/10 pb-12 md:grid-cols-2">
+          <div>
+            <h2 className="text-base font-semibold leading-7 text-slate-900">
+              Login Info
+            </h2>
+            <p className="mt-1 text-sm leading-6 text-slate-600">
+              This information will not be displayed publicly.
+            </p>
+          </div>
 
-      <form onSubmit={handleLogin} className="max-w-md mx-auto">
-        <div className="mb-4">
-          <label
-            htmlFor="email"
-            className="block text-sm font-medium text-gray-700"
-          >
-            Email
-          </label>
-          <input
-            type="email"
-            id="email"
-            className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-            placeholder="Enter your email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-          />
+          <div className="grid max-w-2xl grid-cols-1 gap-x-6 gap-y-8 ">
+            <div className="sm:col-span-4">
+              <label
+                htmlFor="email"
+                className="block text-sm font-medium leading-6 text-slate-900"
+              >
+                Email
+              </label>
+              <div className="mt-2">
+                <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-slate-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
+                  <input
+                    type="text"
+                    name="email"
+                    id="email"
+                    className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-slate-900 placeholder:text-slate-400 focus:ring-0 sm:text-sm sm:leading-6"
+                    placeholder="john.doe@gmail.com"
+                    value={form.email}
+                    onChange={(e) => updateForm({ email: e.target.value })}
+                  />
+                </div>
+              </div>
+            </div>
+            <div className="sm:col-span-4">
+              <label
+                htmlFor="password"
+                className="block text-sm font-medium leading-6 text-slate-900"
+              >
+                Password
+              </label>
+              <div className="mt-2">
+                <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-slate-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
+                  <input
+                    type="password"
+                    name="password"
+                    id="password"
+                    className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-slate-900 placeholder:text-slate-400 focus:ring-0 sm:text-sm sm:leading-6"
+                    placeholder="password"
+                    value={form.password}
+                    onChange={(e) => updateForm({ password: e.target.value })}
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
-        <div className="mb-4">
-          <label
-            htmlFor="password"
-            className="block text-sm font-medium text-gray-700"
-          >
-            Password
-          </label>
-          <input
-            type="password"
-            id="password"
-            className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-            placeholder="Enter your password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-          />
-        </div>
-        <div className="mb-4">
-          <button
-            type="submit"
-            className="inline-flex items-center justify-center w-full h-9 px-4 py-2 border border-transparent text-base font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-          >
-            Login
-          </button>
-        </div>
+        <input
+          type="submit"
+          value="Login"
+          className="inline-flex items-center justify-center whitespace-nowrap text-md font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-slate-100 hover:text-accent-foreground h-9 rounded-md px-3 cursor-pointer mt-4"
+        />
       </form>
-    </div>
+    </>
   );
 }
