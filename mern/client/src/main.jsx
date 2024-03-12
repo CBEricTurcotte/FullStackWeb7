@@ -2,6 +2,7 @@ import * as React from "react";
 import * as ReactDOM from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import App from "./App";
+import Login from "./components/Login";
 import Agent from "./components/Agent";
 import AgentList from "./components/AgentList";
 import "./index.css";
@@ -13,6 +14,16 @@ const router = createBrowserRouter([
     children: [
       {
         path: "/",
+        element: <Login />,
+      },
+    ],
+  },
+  {
+    path: "/home",
+    element: <App />,
+    children: [
+      {
+        path: "/home",
         element: <AgentList />,
       },
     ],
