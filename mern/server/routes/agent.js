@@ -11,6 +11,29 @@ import { ObjectId } from "mongodb";
 // The router will be added as a middleware and will take control of requests starting with path /agent.
 const router = express.Router();
 
+// This section will handle the login request
+router.post("/login", async (req, res) => {
+  try {
+    const { email, password } = req.body;
+
+    // Here you can implement your authentication logic.
+    // For simplicity, let's assume we have a collection named "users" in our database.
+    const collection = db.collection("users");
+    const user = await collection.findOne({ email, password });
+
+    if (user) {
+      // If authentication is successful, you can send a success response.
+      res.status(200).json({ message: "Login successful" });
+    } else {
+      // If authentication fails, you can send an error response.
+      res.status(401).json({ message: "Login failed" });
+    }
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Error during login" });
+  }
+});
+
 // This section will help you get a list of all the agents.
 router.get("/", async (req, res) => {
   let collection = await db.collection("agents");
