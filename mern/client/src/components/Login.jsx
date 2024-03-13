@@ -154,7 +154,7 @@ export default function Agent() {
       });
 
       if (!response.ok) {
-        navigate("/unauthorized");
+        navigate("/error");
         window.alert(await response.text());
         throw new Error(`HTTP error! status: ${response.status}`);
       }
