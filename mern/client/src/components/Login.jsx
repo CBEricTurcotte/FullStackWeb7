@@ -143,32 +143,27 @@ export default function Agent() {
 
   async function onSubmit(e) {
     e.preventDefault();
-    const person = { ...form };
+    const login = { ...form };
     try {
-      let response = await fetch("http://localhost:5050/agent/login", {
+      const response = await fetch("http://localhost:5050/agent/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(person),
+        body: JSON.stringify(login),
       });
 
       if (!response.ok) {
+        navigate("/unauthorized");
+        window.alert(await response.text());
         throw new Error(`HTTP error! status: ${response.status}`);
       }
 
-      const data = await response.json();
-
-      if (response.status === 200) {
-        // Check for success property in response data
-        navigate("/home"); // Redirect to home page on successful login
-      } else {
-        window.alert(data.message || "Login failed"); // Use message from response if available
-      }
+      if (response.status === 200) return navigate("/home");
     } catch (error) {
-      console.error("A problem occurred during login: ", error);
+      console.error("A problem occurred with your fetch operation: ", error);
     } finally {
-      setForm({ email: "", password: "" }); // Clear form fields after submission
+      setForm({ email: "", password: "" });
     }
   }
 

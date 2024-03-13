@@ -117,20 +117,23 @@ const router = express.Router();
 router.post("/login", async (req, res) => {
   try {
     const { email, password } = req.body;
-    const collection = db.collection("users");
-    const user = await collection.findOne({ email, password });
 
-    if (user) {
-      res.status(200).json({ message: "Login successful" });
-    } else {
-      res.redirect("/error"); // Redirect to error page on login failure
-    }
+    if (!email || !password)
+      return res.status(401).send("Unauthorized Request");
+
+    let user = await db.collection("users").findOne({ email });
+
+    if (!user) return res.status(404).send("User not found");
+
+    if (user.password !== password)
+      return res.status(400).send("Incorrect password");
+
+    return res.status(200).send("Agent Found");
   } catch (err) {
     console.error(err);
-    res.status(500).json({ message: "Error during login" });
+    return res.status(500).send("Error adding agent");
   }
 });
-
 router.get("/error", (req, res) => {
   // Serve Error.jsx file from the correct path
   res.status(404).sendFile(path.join(__dirname, "../components/Error.jsx"));

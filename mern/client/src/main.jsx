@@ -63,6 +63,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom"; // Updat
 import ReactDOM from "react-dom"; // Update import statement
 import App from "./App";
 import Login from "./components/Login";
+import Error from "./components/Error";
 import Agent from "./components/Agent";
 import AgentList from "./components/AgentList";
 import "./index.css";
@@ -75,6 +76,16 @@ const router = createBrowserRouter([
       {
         path: "/",
         element: <Login />,
+      },
+    ],
+  },
+  {
+    path: "/error",
+    element: <App />,
+    children: [
+      {
+        path: "/error",
+        element: <Error />,
       },
     ],
   },
