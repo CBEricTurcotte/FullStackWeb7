@@ -13,8 +13,12 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-      - name: Cypress run
+      - name: Start server in the background
+        run: (cd mern/server && npm start &) # Start server in background
+      - name: Start React app in the background (if needed)
+        run: (cd mern/client && npm start &) # Start client in background (optional)
+
+      - name: Install Cypress and run tests
         uses: cypress-io/github-action@v6
         with:
-          start: npm run dev
-          working-directory: mern/client # Added this line
+          working-directory: mern/client
