@@ -16,5 +16,8 @@ jobs:
       - name: Cypress run
         uses: cypress-io/github-action@v6
         with:
-          start: npm run dev
-          working-directory: mern/client # Added this line
+          start: npm run dev # Optional, remove if not needed
+          working-directory: mern/client
+          record: false # Optional
+          publish-summary: true # Optional
+          component: false
