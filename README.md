@@ -34,20 +34,3 @@ npm run dev
 Use at your own risk; not a supported MongoDB product
 
 # FullStackWeb7
-
-# Test yaml
-
-name: End-to-end tests
-
-on:
-push:
-branches: - "dev" - "!main" - "cypress-dev"
-
-jobs:
-cypress-run:
-runs-on: ubuntu-22.04
-steps: - name: Checkout
-uses: actions/checkout@v4 - name: Cypress run
-uses: cypress-io/github-action@v6
-with:
-start: npm start
