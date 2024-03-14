@@ -10,7 +10,7 @@ describe("Web 7 auti-grading", () => {
   });
   it("Admin App 2 - The page title has been changed to reflect the Rocket Elevator App", () => {
     cy.visit("http://localhost:5173/home");
-    cy.title().should("eq", "Admin"); // Check if the title is "Admin"
+    cy.title().should("eq", "Admin"); // Check if the title is "Admin", Assuming the page title is Admin
   });
   it("Admin App 3 - The favicon has been changed to reflect the Rocket Elevator App", () => {
     cy.visit("http://localhost:5173/home");
