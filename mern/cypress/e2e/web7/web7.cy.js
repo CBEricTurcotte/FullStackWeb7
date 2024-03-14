@@ -33,7 +33,7 @@ describe("Web 7 auti-grading", () => {
     cy.contains("th", "Action").should("exist");
   });
   it("Admin App 6 - A login route has been created", () => {
-    // Assert that the /login route is defined in your routes/server/routes/agent.js file
+    // Assert that the /login route is defined in your routes/server/routes/agent.js file //
     cy.readFile("./server/routes/agent.js").then((content) => {
       expect(content).to.include("/login");
     });
