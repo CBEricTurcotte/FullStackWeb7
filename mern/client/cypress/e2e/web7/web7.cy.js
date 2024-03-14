@@ -34,7 +34,7 @@ describe("Web 7 auti-grading", () => {
   });
   it("Admin App 6 - A login route has been created", () => {
     // Assert that the /login route is defined in your routes/server/routes/agent.js file //
-    cy.readFile("./server/routes/agent.js").then((content) => {
+    cy.readFile("../server/routes/agent.js").then((content) => {
       expect(content).to.include("/login");
     });
   });
@@ -60,6 +60,6 @@ describe("Web 7 auti-grading", () => {
     cy.url().should("include", "/error"); // Assuming error page is name /error
   });
   it("Admin App 10 - Agents MongoDB schema has been created", () => {
-    cy.readFile("./server/db/schemas/agent.Schema.js").should("exist"); // Assuming the structure and naming are establiched
+    cy.readFile("../server/db/schemas/agent.Schema.js").should("exist"); // Assuming the structure and naming are establiched
   });
 });
