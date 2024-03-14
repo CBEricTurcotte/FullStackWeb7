@@ -17,3 +17,7 @@ jobs:
         uses: cypress-io/github-action@v6
         with:
           start: npm start
+          working-directory: ./mern/client
+          record: false
+          publish-summary: true
+          component: false
