@@ -9,7 +9,7 @@ on:
     branches:
       - "dev"
       - "!main"
-      - "cypress-dev"
+      - "!cypress-dev"
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -43,16 +43,7 @@ jobs:
         uses: bahmutov/npm-install@v1
         with:
           working-directory: mern/client
-
-      # - name: Start server in the background
-      #   env:
-      #     ATLAS_URI: ${{ secrets.ATLAS_URI }}
-      #   run: (cd mern/server && echo "ATLAS_URI=$ATLAS_URI" > config.env  && npm start &)
-
-      # - name: Start React app in the background
-      #   run: (cd mern/client && npm start &)
-
       - name: Install Cypress and run tests
         uses: cypress-io/github-action@v2
         with:
-          working-directory: mern/client
+          start: npm start
