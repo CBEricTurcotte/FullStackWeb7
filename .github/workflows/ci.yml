@@ -17,4 +17,4 @@ jobs:
         uses: cypress-io/github-action@v6
         with:
           start: npm start
-          working-directory: mern/server # Added this line
+          working-directory: mern/client # Added this line
