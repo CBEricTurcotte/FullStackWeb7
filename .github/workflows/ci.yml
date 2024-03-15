@@ -21,6 +21,14 @@ jobs:
         with:
           node-version: "14" # Update Node.js version to a compatible version
 
+      # Update npm
+      - name: Update npm
+        run: npm install -g npm@latest
+
+      # Check npm version
+      - name: Check npm version
+        run: npm --version
+
       # Clear Node.js cache
       - name: Clear Node.js cache
         run: npm cache clean --force
