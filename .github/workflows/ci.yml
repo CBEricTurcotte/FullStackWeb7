@@ -45,10 +45,6 @@ jobs:
         working-directory: mern/client
         run: npm run dev
 
-      # Wait for client to start
-      - name: Wait for client to start
-        run: npx wait-on http://localhost:5173/
-
       # Run Cypress tests
       - name: Cypress run
         working-directory: mern/client
