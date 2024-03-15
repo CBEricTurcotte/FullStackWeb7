@@ -43,7 +43,7 @@ jobs:
       # Start the client for testing
       - name: Start client
         working-directory: mern/client
-        run: npm start &
+        run: npm run dev
 
       # Wait for client to start
       - name: Wait for client to start
