@@ -48,14 +48,14 @@ jobs:
         working-directory: mern/client
         run: |
           echo "Starting client..."
-          npm start &
+          npm run dev &
           echo "Client should be starting..."
 
       # Wait for client to start
       - name: Wait for client to start
         run: |
           echo "Waiting for client to start..."
-          npx wait-on http://localhost:5173/
+          npx wait-on http://localhost:3000/  # Update the port if needed
           echo "Client should be ready now."
 
       # Run Cypress tests
