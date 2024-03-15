@@ -51,16 +51,16 @@ jobs:
           npm run dev &
           echo "Client should be starting..."
 
-      # Install wait-on package
-      - name: Install wait-on
-        run: npm install wait-on@7.2.0
-
       # Wait for client to start
       - name: Wait for client to start
         run: |
           echo "Waiting for client to start..."
-          npx wait-on http://localhost:3000/  # Update the port if needed
+          sleep 120s  # Increase wait time to 2 minutes
           echo "Client should be ready now."
+
+      # Install wait-on package
+      - name: Install wait-on
+        run: npm install wait-on@7.2.0
 
       # Install Cypress
       - name: Install Cypress
