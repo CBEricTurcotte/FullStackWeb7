@@ -38,12 +38,25 @@ jobs:
 
       # Wait for server to start
       - name: Wait for server to start
-        run: sleep 10s
+        run: |
+          echo "Waiting for server to start..."
+          sleep 30s
+          echo "Server should be ready now."
 
       # Start the client for testing
       - name: Start client
         working-directory: mern/client
-        run: npm run dev
+        run: |
+          echo "Starting client..."
+          npm start &
+          echo "Client should be starting..."
+
+      # Wait for client to start
+      - name: Wait for client to start
+        run: |
+          echo "Waiting for client to start..."
+          npx wait-on http://localhost:5173/
+          echo "Client should be ready now."
 
       # Run Cypress tests
       - name: Cypress run
