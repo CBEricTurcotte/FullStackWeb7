@@ -15,6 +15,14 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      # Debugging: Check permissions
+      - name: Debugging - Check permissions
+        run: |
+          echo "Checking permissions..."
+          ls -la /tmp  # List files in /tmp directory
+          sudo ls -la /root  # List files in /root directory using sudo (if needed)
+          echo "Permissions checked."
+
       # Install Node.js
       - name: Setup Node.js
         uses: actions/setup-node@v2
@@ -62,9 +70,17 @@ jobs:
       - name: Install wait-on
         run: npm install wait-on@7.2.0
 
-      # Install Cypress binary
+      # Clear npm cache
+      - name: Clear npm cache
+        run: npm cache clean --force
+
+      # Clear Cypress cache
+      - name: Clear Cypress cache
+        run: npx cypress cache clear
+
+      # Force reinstall Cypress
       - name: Install Cypress binary
-        run: npx cypress install
+        run: npx cypress install --force
 
       # Run Cypress tests
       - name: Cypress run
