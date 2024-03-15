@@ -23,7 +23,7 @@ jobs:
 
       # Update npm
       - name: Update npm
-        run: npm install -g npm@latest
+        run: npm install -g npm@6
 
       # Check npm version
       - name: Check npm version
