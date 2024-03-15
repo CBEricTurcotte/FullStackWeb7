@@ -51,6 +51,10 @@ jobs:
           npm run dev &
           echo "Client should be starting..."
 
+      # Install wait-on package
+      - name: Install wait-on
+        run: npm install wait-on@7.2.0
+
       # Wait for client to start
       - name: Wait for client to start
         run: |
