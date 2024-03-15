@@ -10,30 +10,49 @@ on:
 jobs:
   cypress-run:
     runs-on: ubuntu-22.04
+
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
+      # Install Node.js
+      - name: Setup Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: "20"
+
+      # Install dependencies for the server
+      - name: Install dependencies for server
+        working-directory: mern/server
+        run: npm ci
+
       # Install dependencies for the client
       - name: Install dependencies for client
         working-directory: mern/client
-        run: npm install
+        run: npm ci
 
       # Start the server for testing
       - name: Start server
         working-directory: mern/server
-        run: npm start
+        run: npm start &
 
       # Wait for server to start
       - name: Wait for server to start
         run: sleep 10s
 
+      # Start the client for testing
+      - name: Start client
+        working-directory: mern/client
+        run: npm start &
+
+      # Wait for client to start
+      - name: Wait for client to start
+        run: npx wait-on http://localhost:5173/
+
       # Run Cypress tests
       - name: Cypress run
         working-directory: mern/client
         run: |
-          npm start &
-          npx wait-on http://localhost:5173/
           npx cypress run
         env:
           CYPRESS_CACHE_FOLDER: /tmp/cypress-cache
