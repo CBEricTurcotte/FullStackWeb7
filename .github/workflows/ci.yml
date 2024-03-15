@@ -15,19 +15,15 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      # Debugging: Check permissions
-      - name: Debugging - Check permissions
-        run: |
-          echo "Checking permissions..."
-          ls -la /tmp  # List files in /tmp directory
-          sudo ls -la /root  # List files in /root directory using sudo (if needed)
-          echo "Permissions checked."
-
       # Install Node.js
       - name: Setup Node.js
         uses: actions/setup-node@v2
         with:
-          node-version: "14"
+          node-version: "14" # Update Node.js version to a compatible version
+
+      # Clear Node.js cache
+      - name: Clear Node.js cache
+        run: npm cache clean --force
 
       # Install dependencies for the server
       - name: Install dependencies for server
