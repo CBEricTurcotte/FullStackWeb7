@@ -55,7 +55,7 @@ jobs:
       - name: Wait for client to start
         run: |
           echo "Waiting for client to start..."
-          npx wait-on http://localhost:3000/  # Update the port if needed
+          npx wait-on http://localhost:5173/  # Update the port if needed
           echo "Client should be ready now."
 
       # Run Cypress tests
