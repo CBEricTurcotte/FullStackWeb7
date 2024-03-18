@@ -77,16 +77,10 @@ jobs:
           cd mern/client
           npm install
 
-      - name: Debug ATLAS_URI Secret
-        run: |
-          echo "ATLAS_URI secret value: ${{ secrets.ATLAS_URI }}"
-
       - name: Start server in the background
-        env:
-          ATLAS_URI: ${{ secrets.ATLAS_URI }}
         run: |
           cd mern/server
-          echo "ATLAS_URI=$ATLAS_URI" > config.env
+          source config.env
           npm start &
 
       - name: Wait for server to start
