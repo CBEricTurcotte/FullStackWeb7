@@ -10,8 +10,6 @@ on:
 jobs:
   cypress-run:
     runs-on: ubuntu-22.04
-    env:
-      ATLAS_URI: "mongodb+srv://Turcotte:test123@cluster0.wxcifa3.mongodb.net/employees?retryWrites=true&w=majority"
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -32,6 +30,8 @@ jobs:
           npm install
 
       - name: Start server in the background
+        env:
+          ATLAS_URI: ${{ secrets.ATLAS_URI }}
         run: |
           cd mern/server
           echo "ATLAS_URI=$ATLAS_URI" > config.env
