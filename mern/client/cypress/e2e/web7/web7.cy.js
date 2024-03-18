@@ -5,14 +5,14 @@ describe("Web 7 auti-grading", () => {
     cy.visit("/");
   });
 
-  it.only("Log to home page", () => {
+  it("Log to home page", () => {
     cy.visit("/");
   });
   it("Admin App 2 - The page title has been changed to reflect the Rocket Elevator App", () => {
     cy.visit("http://localhost:5173/home");
     cy.title().should("eq", "Admin"); // Check if the title is "Admin", Assuming the page title is Admin
   });
-  it.only("Admin App 3 - The favicon has been changed to reflect the Rocket Elevator App", () => {
+  it("Admin App 3 - The favicon has been changed to reflect the Rocket Elevator App", () => {
     cy.visit("http://localhost:5173/home");
     cy.get('link[rel="icon"]').should(
       "have.attr",
@@ -20,18 +20,13 @@ describe("Web 7 auti-grading", () => {
       "/src/images/RocketElevatorsIcon.ico"
     );
   });
-  it.only("Admin App 4 - The Mongo logo has been changed to reflect the Rocket Elevator App", () => {
+  it("Admin App 4 - The Mongo logo has been changed to reflect the Rocket Elevator App", () => {
     cy.visit("http://localhost:5173");
     cy.get('img[alt="Rocket Logo"]');
     // .invoke("attr", "src")
     // .should("include", "RocketElevatorsLogo.png");
   });
-  it.only("Admin App 4 - The Mongo logo has been changed to reflect the Rocket Elevator App", () => {
-    cy.visit("http://localhost:5174");
-    cy.get('img[alt="Rocket Logo"]');
-    // .invoke("attr", "src")
-    // .should("include", "RocketElevatorsLogo.png");
-  });
+
   it("Admin App 5 - Agent table has been modified to includes:Name,Region,Rating,Fee, Action", () => {
     cy.visit("http://localhost:5173/home");
     cy.contains("th", "Name").should("exist");
