@@ -40,14 +40,6 @@
 #       - name: Wait for server to start
 #         run: sleep 10s
 
-#       - name: Start React app in the background
-#         run: |
-#           cd mern/client
-#           npm run dev &
-
-#       - name: Wait for React app to start
-#         run: sleep 10s
-
 #       - name: Install Cypress and run tests
 #         uses: cypress-io/github-action@v6
 #         with:
@@ -85,6 +77,10 @@ jobs:
           cd mern/client
           npm install
 
+      - name: Debug ATLAS_URI Secret
+        run: |
+          echo "ATLAS_URI secret value: ${{ secrets.ATLAS_URI }}"
+
       - name: Start server in the background
         env:
           ATLAS_URI: ${{ secrets.ATLAS_URI }}
@@ -94,6 +90,14 @@ jobs:
           npm start &
 
       - name: Wait for server to start
+        run: sleep 10s
+
+      - name: Start React app in the background
+        run: |
+          cd mern/client
+          npm run dev &
+
+      - name: Wait for React app to start
         run: sleep 10s
 
       - name: Install Cypress and run tests
