@@ -1,3 +1,56 @@
+# name: End-to-end tests
+
+# on:
+#   push:
+#     branches:
+#       - "dev"
+#       - "!main"
+#       - "cypress-dev"
+
+# jobs:
+#   cypress-run:
+#     runs-on: ubuntu-22.04
+#     steps:
+#       - name: Checkout
+#         uses: actions/checkout@v4
+
+#       - name: Set up Node.js 20.x
+#         uses: actions/setup-node@v3
+#         with:
+#           node-version: 20.x
+
+#       - name: Install server npm packages
+#         run: |
+#           cd mern/server
+#           npm install
+
+#       - name: Install client npm packages
+#         run: |
+#           cd mern/client
+#           npm install
+
+#       - name: Start server in the background
+#         env:
+#           ATLAS_URI: ${{ secrets.ATLAS_URI }}
+#         run: |
+#           cd mern/server
+#           echo "ATLAS_URI=$ATLAS_URI" > config.env
+#           npm start &
+
+#       - name: Start React app in the background
+#         run: |
+#           cd mern/client
+#           npm start &
+
+#       - name: Wait for services to start
+#         run: sleep 30s
+
+#       - name: Install and run Cypress tests
+#         uses: cypress-io/github-action@v6
+#         with:
+#           start: npm start
+#           working-directory: mern/client
+
 name: End-to-end tests
 
 on:
@@ -37,36 +90,19 @@ jobs:
           echo "ATLAS_URI=$ATLAS_URI" > config.env
           npm start &
 
+      - name: Wait for server to start
+        run: sleep 10s
+
       - name: Start React app in the background
         run: |
           cd mern/client
-          npm start &
+          npm run dev &
 
-      - name: Wait for services to start
-        run: sleep 30s
+      - name: Wait for React app to start
+        run: sleep 10s
 
-      - name: Install and run Cypress tests
+      - name: Install Cypress and run tests
         uses: cypress-io/github-action@v6
         with:
-          start: npm start
+          start: npm run dev
           working-directory: mern/client
-
-          # name: End-to-end tests
-
-          # on:
-          #   push:
-          #     branches:
-          #       - "dev"
-          #       - "!main"
-          #       - "cypress-dev"
-
-          # jobs:
-          #   cypress-run:
-          #     runs-on: ubuntu-22.04
-          #     steps:
-          #       - name: Checkout
-          #         uses: actions/checkout@v4
-          #       - name: Cypress run
-          #         uses: cypress-io/github-action@v6
-          #         with:
-          #           start: npm start
