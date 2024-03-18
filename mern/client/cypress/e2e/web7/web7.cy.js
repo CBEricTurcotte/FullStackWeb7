@@ -46,7 +46,7 @@ describe("Web 7 auti-grading", () => {
       expect(response.status).to.eq(200); // Assuming 200 OK response for successful existence
     });
   });
-  it("Admin App 8 - After logging in successfully, the user is taken to the home page", () => {
+  it.only("Admin App 8 - After logging in successfully, the user is taken to the home page", () => {
     cy.request("/login").then((response) => {
       expect(response.status).to.eq(200); // Assuming 200 OK response for successful existence
       cy.get("#email").type("cypress@gmail.com");
@@ -55,8 +55,17 @@ describe("Web 7 auti-grading", () => {
       cy.url().should("include", "/home"); // Assuming it was rename /home
     });
   });
-  it("Admin App 9 - When login is unsuccessful, the user is taken to an error / unauthorized page", () => {
-    cy.visit("http://localhost:5173/");
+  it.only("Admin App 8 - After logging in successfully, the user is taken to the home page", () => {
+    cy.request("http://localhost:5173/login").then((response) => {
+      expect(response.status).to.eq(200); // Assuming 200 OK response for successful existence
+      cy.get("#email").type("cypress@gmail.com");
+      cy.get("#password").type("test456");
+      cy.get(".rounded-lg > .inline-flex").click();
+      cy.url().should("include", "/home"); // Assuming it was rename /home
+    });
+  });
+  it.only("Admin App 9 - When login is unsuccessful, the user is taken to an error / unauthorized page", () => {
+    cy.visit("http://localhost:5173");
     cy.get("#email").type("cypress@gmail.com");
     cy.get("#password").type("nopassword");
     cy.get(".rounded-lg > .inline-flex").click();
