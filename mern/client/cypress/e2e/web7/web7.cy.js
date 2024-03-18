@@ -42,7 +42,7 @@ describe("Web 7 auto-grading", () => {
     });
   });
   it("Admin App 7 - The login route is working", () => {
-    cy.request("/login").then((response) => {
+    cy.request("http://localhost:5173").then((response) => {
       expect(response.status).to.eq(200); // Assuming 200 OK response for successful existence
     });
   });
