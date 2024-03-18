@@ -2,17 +2,17 @@
 
 describe("Web 7 auti-grading", () => {
   beforeEach(() => {
-    cy.visit("http://localhost:5173/");
+    cy.visit("/");
   });
 
-  it("Log to home page", () => {
-    cy.visit("http://localhost:5173/home");
+  it.only("Log to home page", () => {
+    cy.visit("/");
   });
   it("Admin App 2 - The page title has been changed to reflect the Rocket Elevator App", () => {
     cy.visit("http://localhost:5173/home");
     cy.title().should("eq", "Admin"); // Check if the title is "Admin", Assuming the page title is Admin
   });
-  it("Admin App 3 - The favicon has been changed to reflect the Rocket Elevator App", () => {
+  it.only("Admin App 3 - The favicon has been changed to reflect the Rocket Elevator App", () => {
     cy.visit("http://localhost:5173/home");
     cy.get('link[rel="icon"]').should(
       "have.attr",
@@ -21,7 +21,7 @@ describe("Web 7 auti-grading", () => {
     );
   });
   it.only("Admin App 4 - The Mongo logo has been changed to reflect the Rocket Elevator App", () => {
-    cy.visit("http://localhost:5173/home");
+    cy.visit("/");
     cy.get('img[alt="Rocket Logo"]');
     // .invoke("attr", "src")
     // .should("include", "RocketElevatorsLogo.png");
