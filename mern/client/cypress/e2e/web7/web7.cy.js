@@ -21,7 +21,13 @@ describe("Web 7 auti-grading", () => {
     );
   });
   it.only("Admin App 4 - The Mongo logo has been changed to reflect the Rocket Elevator App", () => {
-    cy.visit("/");
+    cy.visit("http://localhost:5173");
+    cy.get('img[alt="Rocket Logo"]');
+    // .invoke("attr", "src")
+    // .should("include", "RocketElevatorsLogo.png");
+  });
+  it.only("Admin App 4 - The Mongo logo has been changed to reflect the Rocket Elevator App", () => {
+    cy.visit("http://localhost:5174");
     cy.get('img[alt="Rocket Logo"]');
     // .invoke("attr", "src")
     // .should("include", "RocketElevatorsLogo.png");
