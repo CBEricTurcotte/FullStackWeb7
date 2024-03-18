@@ -1,94 +1,60 @@
+# This is a basic workflow to help you get started with Actions
+
 name: End-to-end tests
 
+# Controls when the workflow will run
 on:
+  # Triggers the workflow on push or pull request events but only for the main branch
   push:
     branches:
       - "dev"
       - "!main"
       - "cypress-dev"
 
-jobs:
-  cypress-run:
-    runs-on: ubuntu-22.04
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
 
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "build"
+  
+  build:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [14.x , 16.x]
+      max-parallel: 1  
+    
+    # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v2
+        with: 
+          ref: 'main-test'
+
+      - name: Install server npm packages
+        uses: bahmutov/npm-install@v1
+        with:
+          working-directory: mern/server
+
+      - name: Install client npm packages
+        uses: bahmutov/npm-install@v1
+        with:
+          working-directory: mern/client
+
+      - name: Start server in the background
+        env: 
+          ATLAS_URI: ${{ secrets.ATLAS_URI }}
+        run: (cd mern/server && echo "ATLAS_URI=$ATLAS_URI" > config.env  && npm start &)
+
+      - name: Start React app in the background
+        run: (cd mern/client && npm start &)
+
       - name: Checkout
         uses: actions/checkout@v4
-
-      # Install Node.js
-      - name: Setup Node.js
-        uses: actions/setup-node@v2
-        with:
-          node-version: "14" # Update Node.js version to a compatible version
-
-      # Update npm
-      - name: Update npm
-        run: npm install -g npm@6
-
-      # Check npm version
-      - name: Check npm version
-        run: npm --version
-
-      # Clear Node.js cache
-      - name: Clear Node.js cache
-        run: npm cache clean --force
-
-      # Install dependencies for the server
-      - name: Install dependencies for server
-        working-directory: mern/server
-        run: npm ci
-
-      # Install dependencies for the client
-      - name: Install dependencies for client
-        working-directory: mern/client
-        run: npm ci
-
-      # Start the server for testing
-      - name: Start server
-        working-directory: mern/server
-        run: npm start &
-
-      # Wait for server to start
-      - name: Wait for server to start
-        run: |
-          echo "Waiting for server to start..."
-          sleep 30s
-          echo "Server should be ready now."
-
-      # Start the client for testing
-      - name: Start client
-        working-directory: mern/client
-        run: |
-          echo "Starting client..."
-          npm run dev &
-          echo "Client should be starting..."
-
-      # Wait for client to start
-      - name: Wait for client to start
-        run: |
-          echo "Waiting for client to start..."
-          sleep 120s  # Increase wait time to 2 minutes
-          echo "Client should be ready now."
-
-      # Install wait-on package
-      - name: Install wait-on
-        run: npm install wait-on@7.2.0
-
-      # Clear npm cache
-      - name: Clear npm cache
-        run: npm cache clean --force
-
-      # Clear Cypress cache
-      - name: Clear Cypress cache
-        run: npx cypress cache clear
-
-      # Force reinstall Cypress
-      - name: Install Cypress binary
-        run: npx cypress install --force
-
-      # Run Cypress tests
       - name: Cypress run
-        run: |
-          npx cypress run
-        env:
-          CYPRESS_CACHE_FOLDER: /tmp/cypress-cache
+        uses: cypress-io/github-action@v6
+        with:
+          start: npm start
+        
